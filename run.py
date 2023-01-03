@@ -55,49 +55,52 @@ def make_tee_times():
     Gets the available tee-times on a chosen day
     and lets user choose a tee time that the function then returns
     """
-    print("Hi there buddy,\nto choose what day you would"
-          + " like to book a tee time, enter a number between 0-6.")
+    print("Hey there buddy,\nChoose what day you would"
+          + " like to tee off.")
     print("\n0 = Monday\n1 = Tuesday\n2 = Wednesday\n"
           + "3 = Thursday\n4 = Friday\n5 = Saturday\n6 = Sunday\n")
-    user_day = int(input("What day would you like to tee off on? "))
-
-    print("Here are all the availble tee times on "
-          + f"{week_days[user_day]}:")
+    user_day = int(input("On what day would you like to tee off? "))
 
     for i in range(len(all_tee_times)):
-        print(all_tee_times[i][user_day])
+        if weather[i][user_day] != 'Thunder':
+            print(all_tee_times[i][user_day])
+
+    print("Above you'll find all the availble tee times on "
+          + f"{week_days[user_day]}:")
 
     print('\nNow choose what time you would like to tee off by'
           + ' typing out one of the tee times above!\n')
     user_time = input("What time would you like to tee off on "
                       + f"{week_days[user_day]}? ")
 
-    print(f"You've chosen tee time: {week_days[user_day]} {user_time}")
+    chosen_tee_time = times_to_tee_off[user_time]  
 
-    if weather[times_to_tee_off[user_time]][user_day] == 'Thunder':
-        print("Sorry bud, the weather's looking a bit electrifying on "
-              + f"{week_days[user_day]},\n"
-              + "our lame golf course supervisor Mr.Lahey "
-              + "won't let our guests play during thunder.\n"
-              + "Try choosing another tee time!\n")
+    print(f"The tee time you've chosen is: {week_days[user_day]} {user_time}")
+
+    if all_tee_times[chosen_tee_time][user_day] == 'Booked':
+        print("\nSorry bud! The tee time on "
+              + f"{week_days[user_day]} at {user_time} is already booked,\n"
+              + "and our lame golf course supervisor Mr.Lahey"
+              + " only lets one group play per tee time.\n"
+              + "Try choosing another one!\n")
         make_tee_times()
 
     elif weather[times_to_tee_off[user_time]][user_day] == 'Cloudy':
         print("All right bud, make sure to bring a sweater, "
               + "the weather's looking a bit cloudy on "
-              + week_days[user_day], user_time)
+              + f"{week_days[user_day]} at {user_time}.")
 
     elif weather[times_to_tee_off[user_time]][user_day] == 'Rain':
         print("Okay bud, bring your rain gear, "
               + "looks like the weather's a bit rainy on "
-              + week_days[user_day], user_time)
+              + f"{week_days[user_day]} at {user_time}.")
 
     else:
-        print("Looking sunny in Sunnyvale on "
-              + week_days[user_day], user_time)
+        print(f"It's looking sunny on {week_days[user_day]} at {user_time}."
+              + " Make sure to bring at least 2 or 3 extra cases of beer bud.")
 
-    chosen_tee_time = times_to_tee_off[user_time]
-    update_bookings(chosen_tee_time, user_day)
+    if weather[chosen_tee_time][user_day] != 'Thunder':
+        update_bookings(chosen_tee_time, user_day)
 
     return chosen_tee_time, user_day
 
@@ -110,9 +113,21 @@ def update_bookings(num_1, num_2):
     SHEET.worksheet('Tee Times').update_cell(num_1 + 1, num_2, "Booked")
     print("Your tee time has been booked!"
           + "Make sure to tell the course supervisor, Jim Lahey,"
-          + " to frigg off if you see him!"
-          + " Happy golfing bud!")
+          + " to frigg off if you see him!\nIt's Sunnyvale policy.\n"
+          + "Anyhoo! Happy golfing bud!")
 
 
+print("Welcome To\n"
+      + "  __                                _\n"
+      + "/ __> _ _ ._ _ ._ _  _ _  _ _  ___ | | ___\n"
+      + "\__ \| | || ' || ' || | || | |<_> || |/ ._>\n"
+      + "<___/`___||_|_||_|_|`_. ||__/ <___||_|\___.\n"
+      + "                    <___'\n"
+      + " ___        _  ___   ___\n"
+      + "/  _>  ___ | || | ' |  _> ___  _ _  _ _  ___ ___ \n"
+      + "| <_/\/ . \| || |-  | <__/ . \| | || '_><_-</ ._>\n"
+      + "`____/\___/|_||_|   `___/\___/`___||_|  /__/\___.\n")
+
+
+print(input('Press Enter to book a tee time'))
 make_tee_times()
-
