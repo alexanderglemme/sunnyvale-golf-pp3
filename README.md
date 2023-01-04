@@ -1,31 +1,81 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Sunnyvale Golf Course bookings
+![Sunnyvale GC CLI](images/screenshot-landing-sunnyvalegc.jpg)
 
-Welcome alexanderglemme,
+[Link to the deployed project](https://sunnyvale-golf-course.herokuapp.com/)
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+[Visit repository here](https://github.com/alexanderglemme/sunnyvale-golf-pp3)
 
-## Reminders
+## Brief description of the projects background and main needs
+Sunnyvale Golf Course is a fictional golf course inspired by the hit tv-show [Trailer Park Boys](https://en.wikipedia.org/wiki/Trailer_Park_Boys). The idea behind the app is that a character from the show (Trevor) har started working on the golf course (thus explaining his abscense in the show) and needs an easy-to-use booking system so that he can't mess things up in the google sheets whenever a guest calls him on the job. Since this character isn't exactly the sharpest tool in the shed, he also needs the booking system to actually tell him what to say to the guest who's on the phone, hence the prompts printed before and after the user inputs.
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+# Features
+## Landing screen
+The landing screen features neat ASCII art of the golf courses logo, and instructions for how to start booking a tee time.
+![Sunnyvale GC CLI](images/screenshot-landing-sunnyvalegc.jpg)
 
-## Creating the Heroku app
+## Start booking
+When the user has pressed enter to start booking, the program will ask the user what day they want to book a tee time. The reason behind there only being one week available to book tee times on is so that tee times don't get swamped way ahead of time, many real life golf courses do the same during times of high demand.
+![Sunnyvale GC CLI](images/screenshot-start-booking-sunnyvalegc.jpg)
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## Choose time
+After the user has selected what day he wants to place a booking, the program will show all the available tee times that day.
+![Sunnyvale GC CLI](images/screenshot-choose-time-sunnyvalegc.jpg)
 
-1. `heroku/python`
-2. `heroku/nodejs`
+## Last step
+After te user successfully enters a tee time, the program will confirm to the user which tee time he/she has chosen, and also make sure that the user knows what weather it will be on the course that day during that tee time and what to do about it, then asks for a name to book in.
+![Sunnyvale GC CLI](images/screenshot-sunny-sunnyvalegc.jpg)
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+## After booking has been placed
+After a name has been entered the program will:
+1. Update the worksheets 'Tee Times' and 'Names' associated to the program by changing the particular cells of the booked tee times.
+2. Show a prompt indicating that the booking has been made and show vital information about the visit.
+3. It then gives the user the option to either head back to the landing, which will come in handy when the booking system gets updated with more actions, or to go straight to start booking again.
+![Sunnyvale GC CLI](images/screenshot-after-booking-sunnyvalegc.jpg)
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+## How the program handles invalid input
+If blank or incorrect user input is entered the program will show a message telling the user what he/she did wrong and go back to start booking.
+![Sunnyvale GC CLI](images/screenshot-incorrect-input-sunnyvalegc.jpg)
 
-Connect your GitHub repository and deploy as normal.
+# Forking the GitHub Repository
+## To make a clone, or 'Fork' this repository, follow the steps below.
 
-## Constraints
+1. Access your GitHub account and find the relevant repository.
+2. Click on 'Fork' on the top right of the page.
+3. You will find a copy of the repository in your own Github account.
+4. Making a Local Clone
+5. Access your GitHub account and find the relevant repository.
+6. Click the 'Code' button next to 'Add file'.
+7. To clone the repository using HTTPS, under clone with HTTPS, copy the link.
+8. Open Git Bash.
+9. Access the directory you want the clone to be have.
+10. In your IDE's terminal type 'git clone' and the paste the URL you copied.
+11. Press Enter.
+12. You now have a local clone.
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+# Deployment
+## Heroku
+### This application has been deployed from Github using Heroku. Here's how:
 
------
-Happy coding!
+1. Create an account at heroku.com
+2. Create a new app, add app name and your region
+3. Click on create app
+4. Go to "Settings"
+5. Under Config Vars, add your sensitive data (creds.json for example)
+6. For this project, I set buildpacks to and in that order.
+7. Go to "Deploy" and at "Deployment method", click on "Connect to Github"
+8. Enter your repository name and click on it when it shows below
+9. Choose the branch you want to buid your app from
+10. If desired, click on "Enable Automatic Deploys", which keeps the app up to date with your Github repository
+
+## Google API
+### Here's how you can set up your own API:
+
+1. Login or create a Google account and navigate to https://console.cloud.google.com/
+2. Create a new Project by clicking on the New Project icon
+3. Add Project name and details
+4. Under API's and services, enable the relevant API for your project (in this case Google Drive and Sheets)
+5. If the API requires, create a credential (service account in this case) for your project
+6. Download the credential and upload it to your workspace a a json-file
+7. Under API's and services, enable the relevant API for your project (in this case Google Drive, Sheets and Calendar)
+8. Search for the needed tasks to be performed in the documentation for the specific API, for example here for the calendar API: Google Calendar API Reference
+9. Add them to your code.
