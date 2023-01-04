@@ -194,6 +194,7 @@ def start_booking():
     print("- My name is Trevor and I'll be helping you book your tee time.\n")
 
     print(input('Press Enter to book a tee time\n'))
+    clear()
     make_tee_times()
 
 
