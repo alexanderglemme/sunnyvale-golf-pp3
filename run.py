@@ -22,7 +22,7 @@ Under here are key value pairs that correspond with
 the expected user input. This is implemented because
 of the .get_values() function, which presents the
 worksheet values as a 2D list (indices start at 0).
-The user input is later manipulated in the update_worksheet
+The user input is later manipulated in the update_worksheet()
 function to accurately fit the data format of the worksheet
 (indices start at 1, not 0).
 """
@@ -64,67 +64,79 @@ times_to_tee_off = {"8:15 AM": 0,
 def make_tee_times():
     """
     Gets the available tee-times on a chosen day
-    and lets user choose a tee time that the function then returns
+    and lets user choose a tee time that the function then returns.
+    If user enters empty of incorrect input it prints a message to the user
+    and lets the user try again to avoid error.
     """
-    clear()
 
     print("- Hey there buddy!\nWhat day would"
           + " you like to tee off?")
     print("\n0 = Monday\n1 = Tuesday\n2 = Wednesday\n"
           + "3 = Thursday\n4 = Friday\n5 = Saturday\n6 = Sunday\n")
-    user_day = int(input("Enter number of day here: "))
+    user_day_str = input("Enter number of day here: ")
 
     clear()
 
-    for i in range(len(all_tee_times)):
-        if weather[i][user_day] != 'Thunder':
-            print(all_tee_times[i][user_day])
+    if user_day_str == "":
+        print('*You entered empty input, try again.*\n')
+        make_tee_times()
+    elif int(user_day_str) > 6:
+        print("*You entered a number that was too big, try again*")
+        make_tee_times()
+    else:
+        user_day_int = int(user_day_str)
+        for i in range(len(all_tee_times)):
+            if weather[i][user_day_int] != 'Thunder':
+                print(all_tee_times[i][user_day_int])
 
     print("Above you'll find all the availble tee times on "
-          + f"{week_days[user_day]}\n")
+          + f"{week_days[user_day_int]}\n")
 
-    print(f"- What time would you like to tee off on {week_days[user_day]}?\n"
-          + "Type out one of the times in the same exact format as above.\n")
+    print(f"-What time would you like to tee off on {week_days[user_day_int]}?"
+          + "\nType out one of the times in the same exact format as above.\n")
     user_time = input("Enter time here: ")
 
-    chosen_tee_time = times_to_tee_off[user_time]
+    if user_time not in times_to_tee_off:
+        clear()
+        print("*You entered incorrect or empty input, try again.*\n")
+        make_tee_times()
+    else:
+        chosen_tee_time = times_to_tee_off[user_time]
 
     clear()
 
     print("(The tee time you've chosen is:"
-          + f" {week_days[user_day]} {user_time})")
+          + f" {week_days[user_day_int]} {user_time})")
 
-    if all_tee_times[chosen_tee_time][user_day] == 'Booked':
+    if all_tee_times[chosen_tee_time][user_day_int] == 'Booked':
         print("\n- Sorry bud! The tee time on "
-              + f"{week_days[user_day]} at {user_time} is already booked,\n"
+              + f"{week_days[user_day_int]} at {user_time} is already booked\n"
               + "and our lame golf course supervisor Mr.Lahey"
               + " only lets one group play per tee time.\n"
               + "Try choosing another one!\n")
         make_tee_times()
 
-    elif weather[times_to_tee_off[user_time]][user_day] == 'Cloudy':
+    elif weather[times_to_tee_off[user_time]][user_day_int] == 'Cloudy':
         print("- All right bud, make sure to bring a sweater,\n"
               + "the weather's looking a bit cloudy on "
-              + f"{week_days[user_day]} at {user_time}.\n")
+              + f"{week_days[user_day_int]} at {user_time}.\n")
 
-    elif weather[times_to_tee_off[user_time]][user_day] == 'Rain':
+    elif weather[times_to_tee_off[user_time]][user_day_int] == 'Rain':
         print("- Okay bud, bring your rain gear, "
               + "looks like the weather's a bit rainy on "
-              + f"{week_days[user_day]} at {user_time}.")
+              + f"{week_days[user_day_int]} at {user_time}.")
 
     else:
-        print(f"- It's looking sunny on {week_days[user_day]} at {user_time}."
-              + "\n"
+        print(f"- It's looking sunny on {week_days[user_day_int]}"
+              + f" at {user_time}.\n"
               + "Make sure to bring at least 2"
-              + "  3 extra cases of beer bud.\n")
+              + " or 3 extra cases of beer bud.\n")
 
-    if weather[chosen_tee_time][user_day] != 'Thunder':
-        update_bookings(chosen_tee_time, user_day)
-
-    return chosen_tee_time, user_day
+    if weather[chosen_tee_time][user_day_int] != 'Thunder':
+        uppdate_worksheets(chosen_tee_time, user_day_int)
 
 
-def update_bookings(num_row, num_col):
+def uppdate_worksheets(num_row, num_col):
     """
     Updates the 'Tee Times' and 'Names' worksheets, using the returned
     values from make_tee_times(), so that the program doesn't
@@ -156,6 +168,7 @@ def update_bookings(num_row, num_col):
     user_choice = input("Press Enter, or 2 then Enter: ")
 
     if user_choice == "2":
+        clear()
         make_tee_times()
     else:
         clear()
@@ -166,7 +179,7 @@ def start_booking():
     """
     Starts the session by printing out a greeting to the receptionist
     at Sunnyvale Golf Course and gives directions on how to start
-    booking tee times
+    booking tee times and what to say to the guest requesting a tee time
     """
     print("- Welcome to:\n"
           + "  __                                _\n"
