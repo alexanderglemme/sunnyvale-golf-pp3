@@ -73,7 +73,7 @@ def make_tee_times():
           + " you like to tee off?")
     print("\n0 = Monday\n1 = Tuesday\n2 = Wednesday\n"
           + "3 = Thursday\n4 = Friday\n5 = Saturday\n6 = Sunday\n")
-    user_day_str = input("Enter number of day here: ")
+    user_day_str = input("Enter number of day here: \n")
 
     clear()
 
@@ -94,7 +94,7 @@ def make_tee_times():
 
     print(f"-What time would you like to tee off on {week_days[user_day_int]}?"
           + "\nType out one of the times in the same exact format as above.\n")
-    user_time = input("Enter time here: ")
+    user_time = input("Enter time here: \n")
 
     if user_time not in times_to_tee_off:
         clear()
@@ -143,7 +143,7 @@ def uppdate_worksheets(num_row, num_col):
     disclose any personal information while looking for tee times
     """
     print("\n- We're almost set! All I need now is your name.\n")
-    user_name = input('Enter name here: ')
+    user_name = input("Enter name here: \n")
     clear()
     SHEET.worksheet('Names').update_cell(num_row + 1, num_col + 1, user_name)
     SHEET.worksheet('Tee Times').update_cell(num_row + 1,
@@ -151,7 +151,7 @@ def uppdate_worksheets(num_row, num_col):
                                              'Booked')
 
     print("- Your tee time has been booked!\n"
-          + "- We'll handle greenfees and eventual cartfees at your arrival\n"
+          + "We'll handle greenfees and eventual cartfees at your arrival\n"
           + "to Sunnyvale Golf Course. We only take cash or hash-coins.\n"
           + "\n- Oh, and make sure to tell the course supervisor,\n"
           + "Jim Lahey, to frigg off if you see him!\n"
@@ -193,7 +193,7 @@ def start_booking():
           + "`____/\___/|_||_|   `___/\___/`___||_|  /__/\___.\n")
     print("- My name is Trevor and I'll be helping you book your tee time.\n")
 
-    print(input('Press Enter to book a tee time'))
+    print(input('Press Enter to book a tee time\n'))
     make_tee_times()
 
 
