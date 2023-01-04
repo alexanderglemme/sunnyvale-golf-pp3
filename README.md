@@ -92,7 +92,7 @@ The structure of the app relies on user input that gets added into this [google 
 5. If the API requires, create a credential (service account in this case) for your project
 6. Download the credential and upload it to your workspace a a json-file
 7. Under API's and services, enable the relevant API for your project (in this case Google Drive, Sheets and Calendar)
-8. Search for the needed tasks to be performed in the documentation for the specific API, for example here for the calendar API: Google Calendar API Reference
+8. Search for the needed tasks to be performed in the documentation for the specific API.
 9. Add them to your code.
 
 # Credits
