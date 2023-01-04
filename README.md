@@ -6,7 +6,7 @@
 [Visit repository here](https://github.com/alexanderglemme/sunnyvale-golf-pp3)
 
 ## Brief description of the projects background and main needs
-Sunnyvale Golf Course is a fictional golf course inspired by the hit tv-show [Trailer Park Boys](https://en.wikipedia.org/wiki/Trailer_Park_Boys). The idea behind the app is that a character from the show (Trevor) har started working on the golf course (thus explaining his abscense in the show) and needs an easy-to-use booking system so that he can't mess things up in the google sheets whenever a guest calls him on the job. Since this character isn't exactly the sharpest tool in the shed, he also needs the booking system to actually tell him what to say to the guest who's on the phone, hence the prompts printed before and after the user inputs.
+Sunnyvale Golf Course is a fictional golf course inspired by the hit tv-show [Trailer Park Boys](https://en.wikipedia.org/wiki/Trailer_Park_Boys). The idea behind the app is that a character from the show (Trevor) har started working on the golf course (thus explaining his abscense in the show) and needs an easy-to-use booking system so that he can't mess things up in the google sheets whenever a guest calls him on the job. Since this character isn't exactly the sharpest tool in the shed, he also needs the booking system to actually tell him what to say to the guest who's on the phone trying to book a tee time, hence the prompts printed before and after the user inputs. Despite this a guest could also use the app if needed because of the very simple and easy to use nature of the app.
 
 # Features
 ## Landing screen
@@ -35,6 +35,21 @@ After a name has been entered the program will:
 ## How the program handles invalid input
 If blank or incorrect user input is entered the program will show a message telling the user what he/she did wrong and go back to start booking.
 ![Sunnyvale GC CLI](images/screenshot-incorrect-input-sunnyvalegc.jpg)
+
+# Testing and bugs
+
+## Code Validation
+- Though pylint shows many problems, it seems as if none of them are vital to the program itself.
+
+## Bugs
+If a user enters text in the start booking input-field, the app throws an error and stops running.
+This is not fixed.
+
+## The deployed heroku app
+The deployed heroku app has been tested via my own machine in a Chrome browser and works. 
+
+# Structure
+The structure of the app relies on user input that gets added into this [google sheets document](https://docs.google.com/spreadsheets/d/1XjO29yE69ECUXRAFkfb5cKHUQ6wUy0s4EyHIYpCQsUc/edit#gid=1516004422) when entered. All preexisting data in the gspread needs to be manually added as of now, this could be updated later.
 
 # Forking the GitHub Repository
 ## To make a clone, or 'Fork' this repository, follow the steps below.
@@ -79,3 +94,46 @@ If blank or incorrect user input is entered the program will show a message tell
 7. Under API's and services, enable the relevant API for your project (in this case Google Drive, Sheets and Calendar)
 8. Search for the needed tasks to be performed in the documentation for the specific API, for example here for the calendar API: Google Calendar API Reference
 9. Add them to your code.
+
+# Credits
+## Code
+My code has been influenced by Code Institute's [love-sandwiches walkthrough project](https://github.com/AJGreaves/love-sandwiches).
+The specific snippet of code that has been heavily influenced by love-sandwiches is:
+```
+import gspread
+from google.oauth2.service_account import Credentials
+
+
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+CREDS = Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('sunnyvale_golfcourse')
+
+all_tee_times = SHEET.worksheet('Tee Times').get_values()
+weather = SHEET.worksheet('Weather').get_values()
+```
+
+I've also turned to [this thread on stackoverflow](https://stackoverflow.com/questions/59497109/is-there-a-python-3-command-to-clear-the-output-console), and more specifically the code which I've borrowed is:
+```
+def clear():
+    """
+    Function that clears the terminal when called to reduce clutter.
+    """
+    os.system('cls')  # on Windows System
+    os.system('clear')  # on Linux System
+```
+... and comes from the user "HariKishore" in mentioned thread.
+
+## ASCII art
+The website i used to generate the landing screen's ASCII art is [this one](https://patorjk.com/software/taag/#p=display&f=Dr%20Pepper&t=Sunnyvale%20Golf%20Course)
+
+## Some README.md content
+The readme content explaining how to fork and deploy was borrowed from [johnvenkiah's pp3 readme](https://github.com/johnvenkiah/CI_PP3_John_Venkiah#readme).
+
+
